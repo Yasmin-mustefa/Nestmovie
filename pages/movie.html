@@ -1,79 +1,120 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore movie information, trailers, cast, ratings, and recommendations on NestMovie.">
+    <meta name="description" content="Explore movie details, ratings, cast, and trailers on NestMovie.">
     <title>Movie Details | NestMovie</title>
+    <link rel="stylesheet" href="../css/pages/movie-details.css">
+    <script src="../js/pages/movie-details.js" defer></script>
 </head>
-
 <body>
-
-    <!-- Main Navigation -->
     <header class="site-header">
-        <nav class="navbar" aria-label="Main navigation">
-            <a href="../index.html" class="logo">NestMovie</a>
-
-            <ul class="nav-links">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="search.html">Discover</a></li>
-                <li><a href="watchlist.html">My Watchlist</a></li>
-            </ul>
+        <a class="brand" href="../index.html" aria-label="NestMovie home">
+            <span class="brand-mark">NEST</span><span class="brand-name">MOVIE</span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="../index.html">Home</a>
+            <a href="search.html">Discover</a>
+            <a href="watchlist.html">Watchlist</a>
         </nav>
+        <a class="nav-search" href="search.html" aria-label="Search movies">⌕</a>
     </header>
 
-    <!-- Main Movie Details Content -->
-    <main class="movie-details-page">
-
-        <!-- Movie Hero Section -->
-        <section class="movie-hero" aria-labelledby="movie-title">
-
-            <div class="movie-poster">
-                <img
-                    src="../assets/images/movie-placeholder.jpg"
-                    alt="Movie poster"
-                    id="movie-poster"
-                >
-            </div>
-
-            <div class="movie-hero-content">
-
-                <p class="movie-tagline" id="movie-tagline">
-                    Discover your next favorite movie.
-                </p>
-
-                <h1 id="movie-title">Movie Title</h1>
-
-                <div class="movie-meta">
-                    <span id="movie-year">Release Year</span>
-                    <span id="movie-runtime">Runtime</span>
-                    <span id="movie-rating">Rating</span>
-                </div>
-
-                <div class="movie-genres" id="movie-genres">
-                    <!-- Movie genres will be displayed here -->
-                </div>
-
-                <div class="movie-actions">
-                    <button type="button" id="watch-trailer-btn">
-                        Watch Trailer
-                    </button>
-
-                    <button type="button" id="add-watchlist-btn">
-                        Add to Watchlist
-                    </button>
-                </div>
-
-            </div>
+    <main id="main-content">
+        <section class="backdrop" id="movie-backdrop" aria-label="Movie backdrop">
+            <div class="backdrop-shade"></div>
+            <a class="back-link" href="../index.html">← Back to discovery</a>
         </section>
 
+        <div class="details-container">
+            <section class="movie-heading" aria-labelledby="movie-title">
+                <div class="poster-panel">
+                    <img id="movie-poster" class="poster" src="" alt="Movie poster">
+                    <button class="button button-primary trailer-button" id="open-trailer" type="button">
+                        <span aria-hidden="true">▶</span> Play official trailer
+                    </button>
+                </div>
+
+                <div class="movie-summary">
+                    <div class="genre-list" id="movie-genres"></div>
+                    <p class="eyebrow" id="movie-tagline"></p>
+                    <h1 id="movie-title">Loading movie...</h1>
+                    <div class="quick-facts" id="quick-facts"></div>
+
+                    <div class="score-grid" id="score-grid">
+                        <div class="score-card">
+                            <span class="score-label">IMDb score</span>
+                            <strong id="imdb-score">—</strong>
+                            <small id="imdb-votes"></small>
+                        </div>
+                        <div class="score-card">
+                            <span class="score-label">Rotten Tomatoes</span>
+                            <strong id="tomato-score">—</strong>
+                            <small>Audience / critic score</small>
+                        </div>
+                        <div class="score-card">
+                            <span class="score-label">Metascore</span>
+                            <strong id="metascore">—</strong>
+                            <small>Metacritic</small>
+                        </div>
+                    </div>
+
+                    <p class="synopsis" id="movie-synopsis"></p>
+                    <div class="movie-actions">
+                        <button class="button button-outline" id="share-movie" type="button">↗ Share movie</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section" aria-labelledby="movie-info-heading">
+                <h2 id="movie-info-heading">Movie information</h2>
+                <dl class="info-grid" id="movie-information"></dl>
+            </section>
+
+            <section class="content-section" aria-labelledby="cast-heading">
+                <div class="section-heading">
+                    <h2 id="cast-heading">Top cast</h2>
+                </div>
+                <div class="cast-grid" id="cast-list"></div>
+            </section>
+
+            <section class="content-section" aria-labelledby="trailer-heading">
+                <div class="section-heading">
+                    <h2 id="trailer-heading">Trailer preview</h2>
+                    <button class="text-button" id="open-theater" type="button">Open fullscreen theater ↗</button>
+                </div>
+                <div class="trailer-frame" id="trailer-preview">
+                    <p>Trailer will appear here when available.</p>
+                </div>
+            </section>
+
+            <section class="content-section" aria-labelledby="reviews-heading">
+                <div class="section-heading">
+                    <h2 id="reviews-heading">Audience reviews</h2>
+                </div>
+                <div class="reviews-list" id="reviews-list"></div>
+            </section>
+
+            <section class="content-section" aria-labelledby="similar-heading">
+                <div class="section-heading">
+                    <h2 id="similar-heading">Similar movies you might like</h2>
+                </div>
+                <div class="similar-grid" id="similar-movies"></div>
+            </section>
+        </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <p>&copy; 2026 NestMovie. All rights reserved.</p>
-    </footer>
+    <dialog class="trailer-dialog" id="trailer-dialog" aria-labelledby="trailer-dialog-title">
+        <div class="dialog-header">
+            <h2 id="trailer-dialog-title">Movie trailer</h2>
+            <button class="icon-button" id="close-trailer" type="button" aria-label="Close trailer">✕</button>
+        </div>
+        <div class="dialog-video" id="dialog-video"></div>
+    </dialog>
 
+    <footer class="site-footer">
+        <p>© 2026 NestMovie. Discover your next favorite movie.</p>
+    </footer>
 </body>
 </html>
