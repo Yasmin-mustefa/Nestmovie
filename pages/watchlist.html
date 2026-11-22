@@ -170,6 +170,155 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
+
+    .state__btn {
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .watchlist-movies {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .watchlist-movies__label {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: var(--color-gold);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .watchlist-movies h2 {
+      margin: 0;
+      color: var(--text-white);
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+    }
+
+    .watchlist__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .watchlist__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .watchlist__grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .watchlist-card__poster {
+      display: grid;
+      min-height: 240px;
+      place-items: center;
+      border-bottom: 1px solid var(--border-default);
+      background: linear-gradient(145deg, #1f293d, #111827);
+      color: var(--color-gold);
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+    }
+
+    .watchlist-card__poster--inception {
+      background: linear-gradient(145deg, #293449, #111827);
+    }
+
+    .watchlist-card__poster--dark-knight {
+      background: linear-gradient(145deg, #1f293d, #0b0e14);
+    }
+
+    .watchlist-card__poster--spirited-away {
+      background: linear-gradient(145deg, #3b2f2f, #111827);
+    }
+
+    .watchlist-card details {
+      margin: 0.75rem 0;
+    }
+
+    .watchlist-card summary {
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 0.8125rem;
+    }
+
+    .watchlist-card details dl {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+      margin: 0.75rem 0 0;
+    }
+
+    .watchlist-card details dt {
+      color: var(--text-muted);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+    }
+
+    .watchlist-card details dd {
+      margin: 0.125rem 0 0;
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+    }
+
+    .watchlist-card__badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.75rem 0;
+    }
+
+    .watchlist-card__badges span {
+      display: inline-block;
+      margin: 0;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      background-color: rgba(245, 197, 24, 0.12);
+      color: var(--color-gold);
+      font-size: 0.6875rem;
+      font-weight: 700;
+    }
+
+    .watchlist-card__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .watchlist-card__actions button {
+      flex: 1 1 auto;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background-color: var(--bg-surface-elevated);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .watchlist-card__actions button:hover {
+      border-color: var(--color-gold);
+      color: var(--color-gold);
+    }
+
+    .watchlist-card__actions [data-action="remove"]:hover {
+      border-color: #ef4444;
+      color: #ef4444;
+    }
   </style>
 </head>
 <body>
@@ -241,103 +390,119 @@
       </div>
     </form>
 
-    <p class="watchlist__state" id="watchlist-loading" role="status" hidden>Loading your watchlist…</p>
+    <p class="state state--loading" id="watchlist-loading" role="status" hidden>
+      <span class="state__spinner" aria-hidden="true"></span>
+      <span class="state__message">Loading your watchlist…</span>
+    </p>
 
-    <section class="watchlist__state" id="watchlist-empty" aria-labelledby="watchlist-empty-heading" hidden>
-      <h2 id="watchlist-empty-heading">No saved movies</h2>
-      <p>Your watchlist is empty.</p>
-      <a href="search.html">Find movies to add</a>
+    <section class="state state--empty" id="watchlist-empty" aria-labelledby="watchlist-empty-heading" hidden>
+      <svg class="state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h10M4 18h7"></path>
+      </svg>
+      <h2 class="state__title" id="watchlist-empty-heading">No saved movies</h2>
+      <p class="state__message">Your watchlist is empty.</p>
+      <a class="state__btn" href="search.html">Find movies to add</a>
     </section>
 
-    <section class="watchlist__state" id="watchlist-error" role="alert" aria-labelledby="watchlist-error-heading" hidden>
-      <h2 id="watchlist-error-heading">Watchlist unavailable</h2>
-      <p>We couldn't load your watchlist.</p>
-      <button type="button" id="watchlist-retry">Try again</button>
+    <section class="state state--error" id="watchlist-error" role="alert" aria-labelledby="watchlist-error-heading" hidden>
+      <svg class="state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path stroke-linecap="round" d="M12 8v5"></path>
+        <path stroke-linecap="round" d="M12 16h.01"></path>
+      </svg>
+      <h2 class="state__title" id="watchlist-error-heading">Watchlist unavailable</h2>
+      <p class="state__message">We couldn't load your watchlist.</p>
+      <button class="state__btn" type="button" id="watchlist-retry">Try again</button>
     </section>
 
-    <section aria-labelledby="watchlist-movies-heading">
-      <h2 id="watchlist-movies-heading">Saved movies</h2>
-      <article>
-        <div></div>
-        <div>
-          <h3>Inception</h3>
-          <details>
-            <summary>Year and rating</summary>
-            <dl>
-              <div>
-                <dt>Release year</dt>
-                <dd><time datetime="2010">2010</time></dd>
-              </div>
-              <div>
-                <dt>Rating</dt>
-                <dd><data value="8.8">8.8</data>/10</dd>
-              </div>
-            </dl>
-          </details>
-          <p >
-            <span >Watched</span>
-            <span >Favorite</span>
-          </p>
-          <div class="movie-card__actions">
-            <button type="button" data-action="toggle-watched" data-movie-id="m001" aria-pressed="true">Mark unwatched</button>
-            <button type="button" data-action="toggle-favorite" data-movie-id="m001" aria-pressed="true">Unfavorite</button>
-            <button type="button" data-action="remove" data-movie-id="m001">Remove</button>
+    <section class="watchlist-movies" aria-labelledby="watchlist-movies-heading">
+      <div>
+        <span class="watchlist-movies__label">My collection</span>
+        <h2 id="watchlist-movies-heading">Saved movies</h2>
+      </div>
+      <div class="movie-grid watchlist__grid">
+        <article class="movie-card watchlist-card" data-movie-id="m001">
+          <div class="watchlist-card__poster watchlist-card__poster--inception" aria-hidden="true">I</div>
+          <div class="movie-card__content">
+            <h3>Inception</h3>
+            <details>
+              <summary>Year and rating</summary>
+              <dl>
+                <div>
+                  <dt>Release year</dt>
+                  <dd><time datetime="2010">2010</time></dd>
+                </div>
+                <div>
+                  <dt>Rating</dt>
+                  <dd><data value="8.8">8.8</data>/10</dd>
+                </div>
+              </dl>
+            </details>
+            <p class="watchlist-card__badges">
+              <span>Watched</span>
+              <span>Favorite</span>
+            </p>
+            <div class="movie-card__actions watchlist-card__actions">
+              <button type="button" data-action="toggle-watched" data-movie-id="m001" aria-pressed="true">Mark unwatched</button>
+              <button type="button" data-action="toggle-favorite" data-movie-id="m001" aria-pressed="true">Unfavorite</button>
+              <button type="button" data-action="remove" data-movie-id="m001">Remove</button>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <article>
-        <div ></div>
-        <div>
-          <h3>The Dark Knight</h3>
-          <details>
-            <summary>Year and rating</summary>
-            <dl>
-              <div>
-                <dt>Release year</dt>
-                <dd><time datetime="2008">2008</time></dd>
-              </div>
-              <div>
-                <dt>Rating</dt>
-                <dd><data value="9.0">9.0</data>/10</dd>
-              </div>
-            </dl>
-          </details>
-          <div >
-            <button type="button" data-action="toggle-watched" data-movie-id="m002" aria-pressed="false">Mark watched</button>
-            <button type="button" data-action="toggle-favorite" data-movie-id="m002" aria-pressed="false">Favorite</button>
-            <button type="button" data-action="remove" data-movie-id="m002">Remove</button>
+        <article class="movie-card watchlist-card" data-movie-id="m002">
+          <div class="watchlist-card__poster watchlist-card__poster--dark-knight" aria-hidden="true">DK</div>
+          <div class="movie-card__content">
+            <h3>The Dark Knight</h3>
+            <details>
+              <summary>Year and rating</summary>
+              <dl>
+                <div>
+                  <dt>Release year</dt>
+                  <dd><time datetime="2008">2008</time></dd>
+                </div>
+                <div>
+                  <dt>Rating</dt>
+                  <dd><data value="9.0">9.0</data>/10</dd>
+                </div>
+              </dl>
+            </details>
+            <div class="movie-card__actions watchlist-card__actions">
+              <button type="button" data-action="toggle-watched" data-movie-id="m002" aria-pressed="false">Mark watched</button>
+              <button type="button" data-action="toggle-favorite" data-movie-id="m002" aria-pressed="false">Favorite</button>
+              <button type="button" data-action="remove" data-movie-id="m002">Remove</button>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
 
-      <article  data-movie-id="m003">
-        <div ></div>
-        <div >
-          <h3>Spirited Away</h3>
-          <details>
-            <summary>Year and rating</summary>
-            <dl>
-              <div>
-                <dt>Release year</dt>
-                <dd><time datetime="2001">2001</time></dd>
-              </div>
-              <div>
-                <dt>Rating</dt>
-                <dd><data value="8.6">8.6</data>/10</dd>
-              </div>
-            </dl>
-          </details>
-          <p>
-            <span>Favorite</span>
-          </p>
-          <div class="movie-card__actions">
-            <button type="button" data-action="toggle-watched" data-movie-id="m003" aria-pressed="false">Mark watched</button>
-            <button type="button" data-action="toggle-favorite" data-movie-id="m003" aria-pressed="true">Unfavorite</button>
-            <button type="button" data-action="remove" data-movie-id="m003">Remove</button>
+        <article class="movie-card watchlist-card" data-movie-id="m003">
+          <div class="watchlist-card__poster watchlist-card__poster--spirited-away" aria-hidden="true">SA</div>
+          <div class="movie-card__content">
+            <h3>Spirited Away</h3>
+            <details>
+              <summary>Year and rating</summary>
+              <dl>
+                <div>
+                  <dt>Release year</dt>
+                  <dd><time datetime="2001">2001</time></dd>
+                </div>
+                <div>
+                  <dt>Rating</dt>
+                  <dd><data value="8.6">8.6</data>/10</dd>
+                </div>
+              </dl>
+            </details>
+            <p class="watchlist-card__badges">
+              <span>Favorite</span>
+            </p>
+            <div class="movie-card__actions watchlist-card__actions">
+              <button type="button" data-action="toggle-watched" data-movie-id="m003" aria-pressed="false">Mark watched</button>
+              <button type="button" data-action="toggle-favorite" data-movie-id="m003" aria-pressed="true">Unfavorite</button>
+              <button type="button" data-action="remove" data-movie-id="m003">Remove</button>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
     </section>
   </main>
 
