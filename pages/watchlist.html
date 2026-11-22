@@ -82,6 +82,94 @@
         padding-right: 2rem;
       }
     }
+
+    .watchlist-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .watchlist-header__badge {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 0.125rem 0.5rem;
+      border-radius: var(--radius-md);
+      background-color: var(--color-gold);
+      color: #000000;
+      font-size: 0.6875rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .watchlist-header h1 {
+      margin: 0;
+      color: var(--text-white);
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.2;
+    }
+
+    .watchlist-header p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+
+    .watchlist-header data {
+      color: var(--color-gold);
+      font-weight: 700;
+    }
+
+    .watchlist-summary {
+      padding: 1.25rem;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-xl);
+      background-color: rgba(18, 22, 34, 0.9);
+    }
+
+    .watchlist-summary h2 {
+      margin: 0 0 1rem;
+      color: var(--text-white);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+    }
+
+    .watchlist-summary__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin: 0;
+    }
+
+    .watchlist-summary__grid div {
+      padding: 0.75rem;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      background-color: var(--bg-surface-elevated);
+    }
+
+    .watchlist-summary__grid dt {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+    }
+
+    .watchlist-summary__grid dd {
+      margin: 0.25rem 0 0;
+      color: var(--color-gold);
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .watchlist-filters .filter-panel__grid {
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 640px) {
+      .watchlist-filters .filter-panel__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
   </style>
 </head>
 <body>
@@ -97,16 +185,17 @@
     </nav>
   </header>
   <main class="watchlist-main">
-    <header>
+    <header class="watchlist-header">
+      <span class="watchlist-header__badge">My collection</span>
       <h1>My Watchlist</h1>
       <p>
         <data value="3">3</data> movies saved
       </p>
     </header>
 
-    <section aria-labelledby="watchlist-summary-heading">
+    <section class="watchlist-summary" aria-labelledby="watchlist-summary-heading">
       <h2 id="watchlist-summary-heading">Watchlist summary</h2>
-      <dl>
+      <dl class="watchlist-summary__grid">
         <div>
           <dt>Watched</dt>
           <dd><data value="1">1</data></dd>
@@ -122,24 +211,33 @@
       </dl>
     </section>
 
-    <form>
-      <div>
-        <label for="watchlist-filter">Filter</label>
-        <select id="watchlist-filter" name="filter">
-          <option value="all" selected>All</option>
-          <option value="unwatched">Want to watch</option>
-          <option value="watched">Watched</option>
-          <option value="favorites">Favorites</option>
-        </select>
+    <form class="filter-panel watchlist-filters" aria-label="Filter and sort watchlist">
+      <div class="filter-panel__header">
+        <div class="filter-panel__title-box">
+          <span>Filter &amp; sort</span>
+          <span class="filter-panel__badge">3 saved</span>
+        </div>
+        <button class="filter-panel__reset-btn" type="reset">Reset</button>
       </div>
-      <div class="watchlist__control">
-        <label for="watchlist-sort">Sort by</label>
-        <select id="watchlist-sort" name="sort">
-          <option value="newest" selected>Newest added</option>
-          <option value="oldest">Oldest added</option>
-          <option value="az">Title A–Z</option>
-          <option value="rating">Rating</option>
-        </select>
+      <div class="filter-panel__grid">
+        <div class="filter-group">
+          <label class="filter-group__label" for="watchlist-filter">Filter</label>
+          <select class="filter-group__select" id="watchlist-filter" name="filter">
+            <option value="all" selected>All</option>
+            <option value="unwatched">Want to watch</option>
+            <option value="watched">Watched</option>
+            <option value="favorites">Favorites</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="filter-group__label" for="watchlist-sort">Sort by</label>
+          <select class="filter-group__select" id="watchlist-sort" name="sort">
+            <option value="newest" selected>Newest added</option>
+            <option value="oldest">Oldest added</option>
+            <option value="az">Title A–Z</option>
+            <option value="rating">Rating</option>
+          </select>
+        </div>
       </div>
     </form>
 
