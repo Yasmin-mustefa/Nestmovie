@@ -38,20 +38,35 @@
 
     <main>
 
-        <section>
-            <h2>Discover Your Next Favourite Movie</h2>
-            <p>
-                From unforgettable adventures to thrilling mysteries,
-                explore movies worth watching.
-            </p>
+        
+<section class="discover-hero">
+    <div class="discover-hero__content">
+        <span class="discover-hero__label">
+            WELCOME TO NESTMOVIE
+        </span>
 
-            <form action="search.html" method="get">
-                <label for="search">Search for a movie:</label>
-                <input type="search" id="search" name="q"
-                       placeholder="Search movie titles...">
-                <button type="submit">Search</button>
-            </form>
-        </section>
+        <h1>Discover Your Next Favourite Movie</h1>
+
+        <p>
+            From unforgettable adventures to thrilling mysteries,
+            explore movies worth watching.
+        </p>
+
+        <form class="discover-hero__search"
+              action="search.html" method="get">
+
+            <input
+                type="search"
+                id="search"
+                name="q"
+                placeholder="Search for movies..."
+                aria-label="Search for movies"
+            >
+
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</section>
 
         <hr>
 
